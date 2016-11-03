@@ -72,4 +72,5 @@ public class GConstants {
 		public String getSelectedIconName() { return this.selectedIconName; }
 		public GShape getShape() { return this.shape; }
 	}
+	
 }

@@ -10,7 +10,7 @@ public class GPolygon extends GShape {
 	public GPolygon() {
 		super(EDrawingType.NP);
 		this.polygon = new Polygon();
-
+		this.shape = this.polygon;
 	}
 	@Override
 	public void initDrawing(int x, int y, Graphics2D g2D) {
@@ -19,16 +19,18 @@ public class GPolygon extends GShape {
 	}
 	@Override
 	public void keepDrawing(int x, int y, Graphics2D g2D) {
-		g2D.draw(this.polygon);
+		g2D.drawPolyline(polygon.xpoints, polygon.ypoints, polygon.npoints);
 		this.polygon.xpoints[this.polygon.npoints-1] = x;
 		this.polygon.ypoints[this.polygon.npoints-1] = y;
-		g2D.draw(this.polygon);
+		g2D.drawPolyline(polygon.xpoints, polygon.ypoints, polygon.npoints);
 	}
 	public void continueDrawing(int x, int y, Graphics2D g2D) {
 		this.polygon.addPoint(x, y);
 	}
 	@Override
 	public void finishDrawing(int x, int y, Graphics2D g2D) {
+		g2D.drawPolyline(polygon.xpoints, polygon.ypoints, polygon.npoints);
+		this.draw(g2D);
 	}
 	@Override
 	public void draw(Graphics2D g2D) {

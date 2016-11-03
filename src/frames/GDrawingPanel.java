@@ -8,20 +8,24 @@ import java.util.Vector;
 import javax.swing.JPanel;
 import javax.swing.event.MouseInputListener;
 
-import constants.GConstants.EDrawingType;
 import shapes.GShape;
 
 public class GDrawingPanel extends JPanel {
 	// attributes
 	private static final long serialVersionUID = 1L;
 	// object states
-	private enum EState {idle, drawing};
+	private enum EState {idleTP, idleNP, drawingTP, drawingNP};
+	private EState eState = EState.idleTP;
 	// components
 	private Vector<GShape> shapeVector;	
 	// associative attributes
 	private GShape selectedShape;
 	public void setSelectedShape(GShape selectedShape) {
 		this.selectedShape = selectedShape;
+		switch (this.selectedShape.geteDrawingType()) {
+			case TP: eState = EState.idleTP; break;
+			case NP: eState = EState.idleNP; break;
+		}
 	}	
 	// working objects;
 	private GShape currentShape;
@@ -64,10 +68,17 @@ public class GDrawingPanel extends JPanel {
 		this.currentShape.finishDrawing(x, y, g2D);
 		this.shapeVector.add(this.currentShape);
 	}
-	
+	private void changePointShape(int x, int y) {
+		for (GShape shape: this.shapeVector) {
+			if (shape.contnains(x, y)) {
+				
+			} else {
+				
+			}
+		}
+	}
 	class MouseEventHandler 
 		implements MouseInputListener, MouseMotionListener {
-		private EState eState = EState.idle;
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (e.getClickCount() == 1) {
@@ -77,52 +88,45 @@ public class GDrawingPanel extends JPanel {
 			}
  		}
 		private void mouse1Clicked(MouseEvent e) {
-			if (eState == EState.idle) {
-				if (selectedShape.geteDrawingType() == EDrawingType.NP) {
-					initDrawing(e.getX(), e.getY());
-					eState = EState.drawing;
-					System.out.println("mouse1Clicked/idle");
-				}
-			} else if (eState == EState.drawing) {	
+			if (eState == EState.idleNP) {
+				initDrawing(e.getX(), e.getY());
+				eState = EState.drawingNP;
+			} else if (eState == EState.drawingNP) {	
 				continueDrawing(e.getX(), e.getY());			
-				System.out.println("mouse1Clicked/drawing");
 			}
 		}
 		private void mouse2Clicked(MouseEvent e) {
-			if (eState == EState.drawing) {		
+			if (eState == EState.drawingNP) {		
 				finishDrawing(e.getX(), e.getY());
-				eState = EState.idle;
-				System.out.println("mouse2Clicked/drawing");
+				eState = EState.idleNP;
 			}			
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (eState == EState.idle) {
+			if (eState == EState.idleTP) {
 				initDrawing(e.getX(), e.getY());
-				eState = EState.drawing;
-				System.out.println("mousePressed/idle");
-			}		
+				eState = EState.drawingTP;
+			}	
 		}
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (eState == EState.drawing) {		
+			if (eState == EState.drawingTP) {		
 				finishDrawing(e.getX(), e.getY());
-				eState = EState.idle;
-				System.out.println("mouseReleased/drawing");
+				eState = EState.idleTP;
 			}
 		}
 		@Override
 		public void mouseMoved(MouseEvent e) {
-			if (eState == EState.drawing) {
+			if (eState == EState.drawingNP) {
 				keepDrawing(e.getX(), e.getY());
-				System.out.println("mouseMoved/drawing");
+			} else if (eState == EState.idleTP || eState == EState.idleNP) {
+				changePointShape(e.getX(), e.getY());
 			}
 		}		
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			if (eState == EState.drawing) {
+			if (eState == EState.drawingTP) {
 				keepDrawing(e.getX(), e.getY());
-				System.out.println("mouseDragged/drawing");
 			}
 		}
 		@Override
