@@ -1,5 +1,7 @@
 package frames;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 
 import constants.GConstants;
@@ -17,12 +19,14 @@ public class GMainFrame extends JFrame {
 		// attribute initialization
 		this.setTitle(GConstants.MAINFRAME_TITLE);
 		this.setLocation(EMainFrame.X.getValue(), EMainFrame.Y.getValue());
-		this.setSize(EMainFrame.W.getValue(), EMainFrame.H.getValue());
-		this.setLayout(new BorderLayout());
+		this.setSize(new Dimension(EMainFrame.W.getValue(), EMainFrame.H.getValue()));
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		// component creation & registration
 		this.menuBar = new GMenuBar();
 		this.setJMenuBar(menuBar);
+		
+		this.getContentPane().setLayout(new BorderLayout());
 		this.toolBar = new GToolBar();
 		this.add(toolBar, BorderLayout.NORTH);
 		this.drawingPanel = new GDrawingPanel();
