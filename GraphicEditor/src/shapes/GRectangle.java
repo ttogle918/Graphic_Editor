@@ -11,10 +11,29 @@ public class GRectangle extends GShape {
 		super(EDrawingType.TP, new Rectangle(0, 0, 0, 0));
 		this.rectangle = (Rectangle)this.getShape();
 	}
+	@Override
+	public void setOrigin(int x, int y) {
+		this.rectangle.setLocation(x, y);
+	}
 	
+	@Override
+	public void addPoint(int x, int y) {
+
+	}
+	
+	public void move(int x, int y){
+		this.rectangle.x += x - px;
+		this.rectangle.y += y - py;
+		this.setPoint(x, y);
+	}
+	public void setPoint(int x, int y) {
+		this.px = x;	this.py = y;
+	}
 	@Override
 	public void resize(int x, int y) {
 		if(this.getCurrentEAnchor() == null){
+			this.rectangle.width = x - this.rectangle.x;
+			this.rectangle.height = y - this.rectangle.y;
 			return;
 		}
 		switch (this.getCurrentEAnchor()) {
@@ -52,7 +71,7 @@ public class GRectangle extends GShape {
 		}
 	}
 	
-	public void draw(Graphics2D g2D) {
+/*	public void draw(Graphics2D g2D) {
 		if( this.rectangle.width < 0 && this.rectangle.height < 0){
 			g2D.drawRect(this.rectangle.width+this.rectangle.x, this.rectangle.y
 					+this.rectangle.height, -this.rectangle.width, -this.rectangle.height);
@@ -78,33 +97,9 @@ public class GRectangle extends GShape {
 					rectangle.width, -rectangle.height);
 		}
 	}
-	public void AnchorDraw(Graphics2D g2D, Rectangle rectangle){
+*/	public void AnchorDraw(Graphics2D g2D, Rectangle rectangle){
 		Anchors anchors = new Anchors();
 		anchors.draw(g2D, rectangle);
 	}
-	@Override
-	public void setOrigin(int x, int y) {
-		this.rectangle.setLocation(x, y);
-	}
-	
-	@Override
-	public void addPoint(int x, int y) {
-		
-	}
-	
-	public void move(int x, int y){
-		this.rectangle.x += x - px;
-		this.rectangle.y += y - py;
-		this.setPoint(x, y);
-	}
-	public void setPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void continueTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -11,7 +11,7 @@ public class GDrawer extends GTransformer{
 	}
 	@Override
 	public void initTransforming(int x, int y, Graphics2D g2d) {
-		this.getShape().setLocation(x, y);
+		this.getShape().setOrigin(x, y);
 		this.getShape().draw(g2d);
 	}
 	@Override
@@ -27,5 +27,4 @@ public class GDrawer extends GTransformer{
 	@Override
 	public void finishTransforming(int x, int y, Graphics2D g2d) {
 	}
-	
 }

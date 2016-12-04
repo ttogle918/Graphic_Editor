@@ -14,8 +14,7 @@ public class GLine extends GShape {
 	}
 	@Override
 	public void resize(int x, int y) {
-		// TODO Auto-generated method stub
-		//this.draw(g2d);
+		
 		switch (this.getCurrentEAnchor()) {
 		case NN:
 			line.setLine(line.getX1(), y, line.getX2(), line.getY2());
@@ -48,28 +47,19 @@ public class GLine extends GShape {
 	}
 	
 	@Override
-	public void addPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		
+	public void addPoint(int x, int y) {	
 	}
 	@Override
 	public void setOrigin(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		this.line.setLine(x, y, x, y);
 	}
 	@Override
 	public void move(int x, int y) {
-		// TODO Auto-generated method stub
-		
+		line.setLine(x+line.getX1()-px, y+line.getY1()-py, x+line.getX2()-px, y-line.getY2()-py);
+		this.setPoint(x, y);
 	}
 	@Override
 	public void setPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void continueTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
+		px = x;		py = y;
 	}
 }

@@ -12,10 +12,32 @@ public class GEllipse extends GShape {
 		super(EDrawingType.TP, new Ellipse2D.Double(0, 0, 0, 0));
 		ellipse = new Ellipse2D.Double();
 	}
-	public Ellipse2D getShape(){	return ellipse;	}
-	
+	public Ellipse2D getShape(){	return ellipse;		}
+	@Override
+	public void addPoint(int x, int y) {
+		
+	}
+	@Override
+	public void setOrigin(int x, int y) {
+		// TODO Auto-generated method stub
+		this.ellipse.setFrame(x, y, x, y);
+		
+	}
+	@Override
+	public void move(int x, int y) {
+		this.ellipse.setFrame(x+ellipse.getX()-px, y+ellipse.getY()-py, ellipse.getWidth(), ellipse.getHeight());
+		this.setPoint(x, y);
+	}
+	@Override
+	public void setPoint(int x, int y) {
+		this.px = x;	this.py = y;
+	}
 	@Override
 	public void resize(int x, int y) {
+		if (this.getCurrentEAnchor() == null) {
+			this.ellipse.setFrame(ellipse.getX(), ellipse.getY(), x-ellipse.getX(), y-ellipse.getY());
+			return;
+		}
 		switch (this.getCurrentEAnchor()) {
 		case NN://
 			ellipse.setFrame(ellipse.getX(), y, ellipse.getWidth(),
@@ -28,7 +50,7 @@ public class GEllipse extends GShape {
 		case NW:
 			ellipse.setFrame(x, y, ellipse.getWidth()-x+getPx(), -y+getPy()+ellipse.getHeight());
 			break;
-		case SS://
+		case SS:
 			ellipse.setFrame(ellipse.getX(), ellipse.getY(), ellipse.getWidth(), ellipse.getHeight()+y-getPy());
 			break;
 		case SE:
@@ -45,14 +67,13 @@ public class GEllipse extends GShape {
 		case WW:
 			ellipse.setFrame(x, ellipse.getY(), -ellipse.getWidth()+x-ellipse.getX(),
 					ellipse.getHeight());
-			break;
+			return;
 		default:
 			break;
 		}
-		// redraw shape
 
 	}
-	public void draw(Graphics2D g2D) {
+/*	public void draw(Graphics2D g2D) {
 		if( this.ellipse.getWidth() < 0 && this.ellipse.getHeight() < 0){
 			g2D.drawOval((int)(ellipse.getX() + ellipse.getWidth()), (int)(ellipse.getY()+ellipse.getHeight()), 
 					-(int)ellipse.getWidth(), -(int)ellipse.getHeight());	
@@ -78,33 +99,9 @@ public class GEllipse extends GShape {
 					ellipse.getWidth(), -ellipse.getHeight());	
 		}
 	}
-	public void AnchorDraw(Graphics2D g2D, Rectangle rectangle){
+*/	public void AnchorDraw(Graphics2D g2D, Rectangle rectangle){
 		Anchors anchors = new Anchors();
 		anchors.draw(g2D, rectangle);
 	}
-	@Override
-	public void addPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void setOrigin(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void move(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void setPoint(int x, int y) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void continueTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }

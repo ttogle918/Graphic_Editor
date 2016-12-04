@@ -11,10 +11,8 @@ import constants.GConstants.EToolBarButton;
 
 public class GToolBar extends JToolBar {
 	private static final long serialVersionUID = 1L;
-	
 	// association	
 	private GDrawingPanel drawingPanel;
-	
 	
 	public GToolBar() {
 		ButtonGroup buttonGroup = new ButtonGroup();
@@ -32,9 +30,9 @@ public class GToolBar extends JToolBar {
 		}
 	}
 	public void initialize(GDrawingPanel drawingPanel) {
+		this.drawingPanel = drawingPanel;
 		JRadioButton button = (JRadioButton) this.getComponentAtIndex(EToolBarButton.rectangle.ordinal());
 		button.doClick();
-		this.drawingPanel = drawingPanel;
 	}
 	public class ActionHandler implements ActionListener {
 		@Override
