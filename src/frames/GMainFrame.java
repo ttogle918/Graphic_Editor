@@ -33,11 +33,9 @@ public class GMainFrame extends JFrame {
 		this.add(drawingPanel, BorderLayout.CENTER);
 	}	
 	public void initialize() {
-		// set associations among components
-		toolBar.setDrawingPanel(this.drawingPanel);
 		// component initialization
-		this.menuBar.initialize();			
-		this.toolBar.initialize();		
+		this.menuBar.initialize(this.drawingPanel);			
+		this.toolBar.initialize(this.drawingPanel);		
 		this.drawingPanel.initialize();		
 	}
 }

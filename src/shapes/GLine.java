@@ -1,6 +1,7 @@
 package shapes;
 
-import java.awt.Graphics2D;
+import java.awt.Shape;
+import java.awt.geom.AffineTransform;
 import java.awt.geom.Line2D;
 
 import constants.GConstants.EDrawingType;
@@ -11,45 +12,26 @@ public class GLine extends GShape {
 		super(EDrawingType.TP, new Line2D.Double(0, 0, 0, 0));
 		this.line = (Line2D.Double)this.getShape();
 	}
-	@Override
-	public void initDrawing(int x, int y, Graphics2D g2D) {
+	public void setOrigin(int x, int y) {
 		line.setLine(x, y, x, y);
-		this.draw(g2D);
 	}
-	@Override
-	public void keepDrawing(int x, int y, Graphics2D g2D) {
-		this.draw(g2D);
+	public void setPoint(int x, int y) {
+	}
+	public void addPoint(int x, int y) {
+	}
+	public void resize(int x, int y) {
 		this.line.setLine(this.line.getX1(), this.line.getY1(), x, y);
-		this.draw(g2D);
+	}
+	public void move(int x, int y) {
 	}
 	@Override
-	public void initTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
+	public GShape deepCopy() {
+		AffineTransform affineTransform = new AffineTransform();
+		Shape newShape = affineTransform.createTransformedShape(shape);
+		GLine shape = new GLine();
+		shape.setShape(newShape);
+		shape.setGraphicsAttributes(this);
+		return shape;
 	}
-	@Override
-	public void keepTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void finishTransforming(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void initResizing(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void keepResizing(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void finishResizing(int x, int y, Graphics2D g2d) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 }
